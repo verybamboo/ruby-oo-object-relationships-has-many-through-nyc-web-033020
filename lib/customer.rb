@@ -3,6 +3,7 @@ class Customer
     attr_accessor :name, :age
 
     @@all = []
+
     def initialize(name, age)
         @name = name
         @age = age
@@ -13,19 +14,15 @@ class Customer
         @@all
     end
 
+    def new_meal(waiter, total, tip = 0)
+        Meal.new(waiter, self, total, tip)
+    end
+
     def meals
-        Meal.all.select do |meal|
-            meal.customer == self
-        end
+        Meal.all.select  {|meal| meal.customer == self}
     end
 
     def waiters
-        meals.map do |map|
-            meal.waiter
-        end
-    end
-
-    def new_meal(waiter, total, tip = 0)
-        Meal.new(waiter, self, total, tip)
+        meals.map { |meal| meal.waiter}
     end
 end
